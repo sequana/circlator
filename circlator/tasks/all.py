@@ -93,6 +93,8 @@ def run():
 
     try:
         os.mkdir(options.outdir)
+    except FileExistsError:
+        pass
     except:
         print('Error making output directory', options.outdir, file=sys.stderr)
         sys.exit(1)
