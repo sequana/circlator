@@ -732,8 +732,9 @@ class Merger:
     def _contigs_dict_to_file(self, contigs, fname):
         '''Writes dictionary of contigs to file'''
         f = pyfastaq.utils.open_file_write(fname)
-        for contig in sorted(contigs, key=lambda x:len(contigs[x]), reverse=True):
-            print(contigs[contig], file=f)
+        for i, (contig_id, contig) in enumerate(sorted(contigs.items(), key=lambda item:len(item[1]), reverse=True)):
+            contig.id = f"{i + 1} {contig.id}"
+            print(contig, file=f)
         pyfastaq.utils.close(f)
 
 
