@@ -1,6 +1,3 @@
-import os
-import shutil
-import sys
 import glob
 from setuptools import setup, find_packages
 
@@ -9,7 +6,7 @@ setup(
     name='circlator',
     version='1.5.5',
     description='circlator: a tool to circularise genome assemblies',
-    packages = find_packages(),
+    packages=find_packages(),
     package_data={'circlator': ['data/*']},
     author='Martin Hunt, Nishadi De Silva, (this small edit is from Nicola De Maio) ',
     author_email='path-help@sanger.ac.uk',

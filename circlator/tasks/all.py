@@ -1,8 +1,11 @@
 import argparse
 import os
+import shutil
 import sys
-import pyfastaq
+
 import circlator
+import pyfastaq
+
 
 class Error (Exception): pass
 
@@ -17,6 +20,7 @@ def run():
         description = 'Run mapreads, bam2reads, assemble, merge, clean, fixstart',
         usage = 'circlator all [options] <assembly.fasta> <reads.fasta/q> <output directory>')
     parser.add_argument('--threads', type=int, help='Number of threads [%(default)s]', default=1, metavar='INT')
+    parser.add_argument('--force', type=bool, help='Force circlator rerun', default=False, metavar='BOOL')
     parser.add_argument('--verbose', action='store_true', help='Be verbose')
     parser.add_argument('--unchanged_code', type=int, help='Code to return when the input assembly is not changed [%(default)s]', default=0, metavar='INT')
     parser.add_argument('--assembler', choices=circlator.common.allowed_assemblers, help='Assembler to use for reassemblies [%(default)s]', default='spades')
@@ -90,12 +94,15 @@ def run():
     original_assembly = os.path.abspath(options.assembly)
     original_reads = os.path.abspath(options.reads)
 
-
     try:
         os.mkdir(options.outdir)
-    except FileExistsError:
-        pass
-    except:
+    except FileExistsError as err:
+        if options.force:
+            shutil.rmtree(options.outdir)
+            os.mkdir(options.outdir)
+        else:
+            raise err
+    except Exception:
         print('Error making output directory', options.outdir, file=sys.stderr)
         sys.exit(1)
 

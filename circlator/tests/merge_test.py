@@ -581,9 +581,9 @@ class TestMerge(unittest.TestCase):
     def test_contigs_dict_to_file(self):
         '''test _contigs_dict_to_file'''
         d = {
-            '3': pyfastaq.sequences.Fasta('3', 'A'),
-            '2': pyfastaq.sequences.Fasta('2', 'AAC'),
-            '1': pyfastaq.sequences.Fasta('1', 'ACGTA'),
+            '3': pyfastaq.sequences.Fasta('( ͠° ͟ʖ ͡°)', 'A'),
+            '2': pyfastaq.sequences.Fasta('(° ͜ʖ °)', 'AAC'),
+            '1': pyfastaq.sequences.Fasta('( ͡° ͜ʖ ͡°)', 'ACGTA'),
         }
         tmpfile = 'tmp.test_contigs_dict_to_file.fa'
         self.merger._contigs_dict_to_file(d, tmpfile)
