@@ -20,7 +20,7 @@ def run():
         description = 'Run mapreads, bam2reads, assemble, merge, clean, fixstart',
         usage = 'circlator all [options] <assembly.fasta> <reads.fasta/q> <output directory>')
     parser.add_argument('--threads', type=int, help='Number of threads [%(default)s]', default=1, metavar='INT')
-    parser.add_argument('--force', type=bool, help='Force circlator rerun', default=False, metavar='BOOL')
+    parser.add_argument('--force', action='store_true', help='Force circlator rerun')
     parser.add_argument('--verbose', action='store_true', help='Be verbose')
     parser.add_argument('--unchanged_code', type=int, help='Code to return when the input assembly is not changed [%(default)s]', default=0, metavar='INT')
     parser.add_argument('--assembler', choices=circlator.common.allowed_assemblers, help='Assembler to use for reassemblies [%(default)s]', default='spades')
