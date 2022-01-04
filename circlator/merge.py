@@ -726,14 +726,18 @@ class Merger:
                 print(this_log_prefix, '\tNo contig merges were made',sep='', file=log_fh)
 
         pyfastaq.utils.close(log_fh)
+        # rewrite file with short name
+        with pyfastaq.utils.open_file_write(genome_fasta) as fhout:
+            for i, contig in enumerate(sorted(self.original_contigs.values(), key=lambda v: len(v), reverse=True)):
+                contig.id = f"ctg{i + 1} {contig.id}"
+                print(contig, file=fhout)
         return genome_fasta, nucmer_coords, act_prefix + '.start_act.sh'
 
 
     def _contigs_dict_to_file(self, contigs, fname):
         '''Writes dictionary of contigs to file'''
         f = pyfastaq.utils.open_file_write(fname)
-        for i, (contig_id, contig) in enumerate(sorted(contigs.items(), key=lambda item:len(item[1]), reverse=True)):
-            contig.id = f"{i + 1} {contig.id}"
+        for contig in sorted(contigs.values(), key=lambda v:len(v), reverse=True):
             print(contig, file=f)
         pyfastaq.utils.close(f)
 
