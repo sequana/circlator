@@ -69,7 +69,9 @@ def make_and_check_prog(name, verbose=False, raise_error=True, filehandle=None, 
             die = True
         else:
             die = raise_error and (name not in not_required)
-        handle_error("WARNING: Didn't find " + name + " in path. Looked for:" + p.path, raise_error=die)
+
+        if name != "canu":
+            handle_error("WARNING: Didn't find " + name + " in path. Looked for:" + p.path, raise_error=die)
         return p
 
     version = p.version
@@ -86,8 +88,8 @@ def make_and_check_prog(name, verbose=False, raise_error=True, filehandle=None, 
         handle_error('ERROR! SPAdes version ' + bad_versions['spades'] + ' is incompatible with Circlator. Please use SPAdes 3.7.1', raise_error=raise_error)
         return p
 
-    if name == 'spades' and not p.version.startswith('3.7.'):
-        print('WARNING: SPAdes version', p.version, 'is being used. It will work, but better results are usually obtained from Circlator using SPAdes version 3.7.1. Although 3.7.1 is not the latest version, we recommend it for Circlator.', file=sys.stderr)
+    #if name == 'spades' and not p.version.startswith('3.7.'):
+    #    print('WARNING: SPAdes version', p.version, 'is being used. It will work, but better results are usually obtained from Circlator using SPAdes version 3.7.1. Although 3.7.1 is not the latest version, we recommend it for Circlator.', file=sys.stderr)
 
     if verbose:
         print(name, p.version, p.from_which, sep='\t')
